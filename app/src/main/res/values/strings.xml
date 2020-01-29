@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TextView Sample</string>
+    <string name="text_hello">Text from res/values/string.xml</string>
+    <string name="CredSum">Сумма Кредита</string>
+</resources>
