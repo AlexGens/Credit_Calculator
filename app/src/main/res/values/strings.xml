@@ -3,4 +3,6 @@
     <string name="app_name">TextView Sample</string>
     <string name="text_hello">Text from res/values/string.xml</string>
     <string name="CredSum">Сумма Кредита</string>
+    <string name="percent">Введите %</string>
+    <string name="toolbarTitle">Кредитный калькулятор</string>
 </resources>
