@@ -1,48 +1,49 @@
 package com.example.credit_calculator;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import java.util.Calendar;
 
 
+public class MainActivity extends Activity {
 
-
-public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
-
-    private TextView payoutDurationTxVw;
+    private EditText payoutDurationEdTx;
     private EditText creditSumEdTx;
     private EditText percentEdTx;
     private int creditSum;
     private double percent;
     private TextView result;
     private int payoutDuration;
-    private Button calculation;
+    private TextView calculation;
     private Toast toast;
     private View rectangleView;
+    private int years;
+    private int months;
+    private int days;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final   Context context = getApplicationContext();
+        context = getApplicationContext();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
-        SeekBar mySeekbar = (SeekBar) findViewById(R.id.seekBar);         // Создаём ползунок количества месяцев
-        mySeekbar.setOnSeekBarChangeListener(this);
-        creditSumEdTx = (EditText) findViewById(R.id.creditSumId);        // Окно ввода суммы кредита
-        CreditType creditType = CreditType.ANNUITY;                       // Вид платежа
-        calculation = (Button) findViewById(R.id.calculationXML);         // Кнопка "расчитать"
-        payoutDurationTxVw = (TextView) findViewById(R.id.SeekBarNumber); // Значение количества месяцев (число)
-        percentEdTx = (EditText) findViewById(R.id.procentXML);           // Окно ввода процентов по кредиту
-        payoutDurationTxVw.setText("3");
-        result = (TextView) findViewById(R.id.resultXML);                 // Вывод суммы платежа
+        creditSumEdTx = (EditText) findViewById(R.id.credit_Sum_id);
+        CreditType creditType = CreditType.ANNUITY;
+        calculation = (TextView) findViewById(R.id.calculation_id);
+        payoutDurationEdTx = (EditText) findViewById(R.id.how_long_id);
+        percentEdTx = (EditText) findViewById(R.id.percent_id);
+
+
         calculation.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -53,7 +54,6 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                    toast.show();
                    return;
                }
-               payoutDuration = Integer.parseInt(payoutDurationTxVw.getText().toString());
                try {
                    percent = Double.parseDouble(percentEdTx.getText().toString()) / 100;
                } catch (Exception e) {
@@ -61,8 +61,15 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                    toast.show();
                    return;
                }
+               try {
+                   payoutDuration = Integer.parseInt(payoutDurationEdTx.getText().toString());
+               } catch (Exception e) {
+                   toast = Toast.makeText(context, "Введите срок кредитования",Toast.LENGTH_LONG );
+                   toast.show();
+                   return;
+               }
                CalcAnnuitet calculator = new CalcAnnuitet(creditSum, percent, payoutDuration);
-           result.setText(String.valueOf(calculator.getResultBySumAndProcent()));
+           result.setText(String.valueOf(calculator.getAnnuitetPay()));
 
 
 
@@ -72,20 +79,9 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
 
 
-
-    }
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-        payoutDurationTxVw.setText(String.valueOf(seekBar.getProgress() + 3));
     }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
 
-    }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        payoutDurationTxVw.setText(String.valueOf(seekBar.getProgress() + 3));
-    }
+
 }

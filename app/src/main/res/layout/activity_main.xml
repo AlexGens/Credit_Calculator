@@ -32,53 +32,213 @@
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="4dp">
-        <View
+        android:background="@drawable/rectangle"
+        style="@style/Basic"
+       >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/rectangle"
-            android:elevation="4dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/need_to_calculate"
+                android:id="@+id/want_to_calculateTxVw"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+            </TextView>
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-        </View>
+            </Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/money">
+
+            </ImageView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/CredSum"
+                android:layout_marginStart="8dp"
+                android:id="@+id/credit_Sum_id"
+                android:inputType="number"
+                android:textSize="18sp">
+
+            </EditText>
 
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/percentage">
+
+            </ImageView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/percent"
+                android:layout_marginStart="8dp"
+                android:id="@+id/percent_id"
+                android:inputType="numberDecimal"
+                android:textSize="18sp">
+
+            </EditText>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/duration">
+
+            </ImageView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/how_long"
+                android:layout_marginStart="8dp"
+                android:id="@+id/how_long_id"
+                android:inputType="number"
+                android:textSize="18sp">
+
+            </EditText>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/date_of_payment">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/date_of_start_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="@string/date_of_start"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:focusable="false">
+
+            </TextView>
+
+
+        </LinearLayout>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/annuitXML"
+                android:text="@string/annuitet"
+                android:checked="true">
+
+            </RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/differencXML"
+                android:text="@string/difference">
+
+            </RadioButton>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/calculation_id"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/calc_rectangle"
+            android:elevation="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/calculate"
+            android:gravity="center">
+
+        </TextView>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="8dp"
-        android:paddingLeft="8dp"
         android:paddingBottom="4dp">
-        <ImageButton
-            android:id="@+id/calculationXML"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@drawable/calc_rectangle"
-            android:layout_marginBottom="4dp"
-            android:elevation="4dp">
 
-        </ImageButton>
-        <ImageButton
-            android:id="@+id/grafXML"
+
+        <TextView
+            android:id="@+id/graf_id"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:background="@drawable/graf_rectangle"
             android:layout_marginTop="4dp"
-            android:elevation="4dp">
+            android:background="@drawable/graf_rectangle"
+            android:elevation="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/extra_payment"
+            android:gravity="center">
 
-        </ImageButton>
+        </TextView>
     </LinearLayout>
-
 
 
 </LinearLayout>

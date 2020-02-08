@@ -14,9 +14,12 @@ public class CalcAnnuitet {
 
     }
 
-   public int getResultBySumAndProcent() {
+   public int getAnnuitetPay() {
        double koef = findCoef().doubleValue();
        return  (int)Math.round((this.creditSum * koef));
+   }
+   private BigDecimal getDayPercent() {
+        return BigDecimal.valueOf(this.percent).divide(BigDecimal.valueOf(365), 5, RoundingMode.DOWN);
    }
    private BigDecimal findCoef() {
         BigDecimal monthPercent = BigDecimal.valueOf(this.percent).divide(BigDecimal.valueOf(12), 5, RoundingMode.DOWN);
@@ -27,5 +30,6 @@ public class CalcAnnuitet {
         BigDecimal divided = firstToDivide.divide(secondToDivide, 5, RoundingMode.DOWN );
         return divided;
     }
-   // Здесь нужны точные вычисления и соответствующие классы
+
+
 }
