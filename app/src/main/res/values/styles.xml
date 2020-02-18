@@ -23,5 +23,91 @@
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginBottom">4dp</item>
     </style>
+    <style name="EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="EditText_Layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+    <style name="ImageView">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="ImageView.EnterCredSum">
+        <item name="android:background">@drawable/money</item>
+    </style>
+    <style name="EditText.EnterCreditSum">
+        <item name="android:hint">@string/CredSum</item>
+        <item name="android:inputType">number</item>
+
+    </style>
+    <style name="ImageView.EnterPercent">
+        <item name="android:background">@drawable/percentage</item>
+    </style>
+    <style name="EditText.EnterPercent">
+        <item name="android:hint">@string/percent</item>
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+    <style name="ImageView.EnterPayoutDur">
+        <item name="android:background">@drawable/duration</item>
+    </style>
+    <style name="EditText.EnterPayoutDur">
+        <item name="android:hint">@string/payout_duration</item>
+        <item name="android:inputType">number</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="spinner_payout_dur">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:entries">@array/spinner_payout_dur</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+    <style name="ImageView.EnterStartDate">
+        <item name="android:background">@drawable/date_of_payment</item>
+    </style>
+    <style name="EditText.EnterStartDate">
+        <item name="android:hint">@string/date_of_start</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:focusable">false</item>
+    </style>
+    <style name="ImageView.EnterMonthPay">
+        <item name="android:background">@drawable/month_pay</item>
+    </style>
+    <style name="EditText.EnterMonthPay">
+        <item name="android:hint">@string/month_pay</item>
+        <item name="android:inputType">number</item>
+    </style>
+    <style name="CreditType">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="CreditType_annuitet">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/annuitet</item>
+        <item name="android:checked">true</item>
+        <item name="android:onClick">credTypeClick</item>
+        <item name="android:tag">annuitetXML</item>
+    </style>
+    <style name="CreditType_difference">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/difference</item>
+        <item name="android:onClick">credTypeClick</item>
+        <item name="android:tag">differenceXML</item>
+    </style>
 
 </resources>
+

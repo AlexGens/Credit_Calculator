@@ -4,14 +4,24 @@
     <string name="text_hello">Text from res/values/string.xml</string>
     <string name="CredSum">Введите сумму</string>
     <string name="percent">Процентную ставку</string>
-    <string name="how_long">Срок кредитования</string>
+    <string name="payout_duration">Срок кредитования</string>
     <string name="date_of_start">Начало выплат</string>
     <string name="toolbarTitle">Кредитный калькулятор</string>
     <string name="need_to_calculate">Хочу расчитать</string>
+    <string name="month_pay">Ежемесячный платёж</string>
     <string name="annuitet">Аннуитетный</string>
     <string name="difference">Диффиренцированный</string>
     <string name="calculate">Расчитать</string>
     <string name="extra_payment">Расчитать досрочное погашение</string>
+    <string-array name="spinner_strings">
+        <item>Ежемесячный платёж</item>
+        <item>Срок выплаты</item>
+        <item>Сумму кредита</item>
+    </string-array>
+    <string-array name="spinner_payout_dur">
+        <item>месяцев</item>
+        <item>лет</item>
+    </string-array>
     <string name="credit_sum_4_result">Сумма кредита</string>
     <string name="percent_4_result">Процентная ставка</string>
     <string name="payout_duration_4_result">Срок кредита</string>
@@ -20,4 +30,5 @@
     <string name="all_percents_4_result">Переплата по процентам</string>
     <string name="full_payment_4_result">Общая сумма выплат</string>
     <string name="date_of_last_payment_4_result">Дата последней выплаты</string>
+
 </resources>

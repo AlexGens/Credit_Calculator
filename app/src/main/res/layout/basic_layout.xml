@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@id/payment_data_layout_id"
+   >
+       <LinearLayout
+           style="@style/EditText_Layout">
+           <ImageView
+               style="@style/ImageView.EnterCredSum"
+               android:id="@id/credit_sum_image_id">
+           </ImageView>
+           <EditText
+               style="@style/EditText.EnterCreditSum"
+               android:id="@id/credit_Sum_id">
+           </EditText>
+
+
+       </LinearLayout>
+       <LinearLayout
+           style="@style/EditText_Layout">
+           <ImageView
+               style="@style/ImageView.EnterPercent"
+               android:id="@id/percent_image_id">
+           </ImageView>
+           <EditText
+               style="@style/EditText.EnterPercent"
+               android:id="@id/percent_id">
+           </EditText>
+
+
+       </LinearLayout>
+       <LinearLayout
+           style="@style/EditText_Layout">
+           <ImageView
+               style="@style/ImageView.EnterPayoutDur"
+               android:id="@id/payout_duration_image_id">
+
+           </ImageView>
+           <EditText
+               style="@style/EditText.EnterPayoutDur"
+               android:id="@id/payout_duration_id">
+
+           </EditText>
+
+           <Spinner
+               style="@style/spinner_payout_dur"
+               android:id="@id/spinner_payout_dur_id">
+
+           </Spinner>
+
+
+       </LinearLayout>
+       <LinearLayout
+           style="@style/EditText_Layout">
+           <ImageView
+               style="@style/ImageView.EnterStartDate"
+               android:id="@id/date_of_start_image_id">
+           </ImageView>
+
+           <EditText
+               style="@style/EditText.EnterStartDate"
+               android:id="@id/date_of_start_id">
+           </EditText>
+       </LinearLayout>
+       <RadioGroup
+           style="@style/CreditType"
+           android:id="@id/credit_type_id">
+           <RadioButton
+               style="@style/CreditType_annuitet"
+               android:id="@id/credit_type_annuitet_id">
+
+           </RadioButton>
+           <RadioButton
+               style="@style/CreditType_difference"
+               android:id="@id/credit_type_difference_id">
+
+           </RadioButton>
+
+       </RadioGroup>
+   </LinearLayout>

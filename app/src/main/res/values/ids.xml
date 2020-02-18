@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="payment_data_layout_id" type="id"></item>
+    <item name="credit_sum_layout_id" type="id"></item>
+    <item name="credit_sum_image_id" type="id"></item>
+    <item name="credit_sum_id" type="id"></item>
+    <item name="percent_layout_id" type="id"></item>
+    <item name="percent_image_id" type="id"></item>
+    <item name="percent_id" type="id"></item>
+    <item name="payout_duration_layout_id" type="id"></item>
+    <item name="payout_duration_image_id" type="id"></item>
+    <item name="payout_duration_id" type="id"></item>
+    <item name="spinner_payout_dur_id" type="id"></item>
+    <item name="date_of_start_layout_id" type="id"></item>
+    <item name="date_of_start_image_id" type="id"></item>
+    <item name="date_of_start_id" type="id"></item>
+    <item name="month_pay_layout_id" type="id"></item>
+    <item name="month_pay_image_id" type="id"></item>
+    <item name="month_pay_id" type="id"></item>
+    <item name="credit_type_id" type="id"></item>
+    <item name="credit_type_annuitet_id" type="id"></item>
+    <item name="credit_type_difference_id" type="id"></item>
+</resources>
