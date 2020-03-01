@@ -14,7 +14,7 @@
     <string name="calculate">Расчитать</string>
     <string name="extra_payment">Расчитать досрочное погашение</string>
     <string-array name="spinner_strings">
-        <item>Ежемесячный платёж</item>
+        <item>Месячный платёж</item>
         <item>Срок выплаты</item>
         <item>Сумму кредита</item>
     </string-array>
@@ -30,5 +30,10 @@
     <string name="all_percents_4_result">Переплата по процентам</string>
     <string name="full_payment_4_result">Общая сумма выплат</string>
     <string name="date_of_last_payment_4_result">Дата последней выплаты</string>
+    <string name="fragment_show_results">Результат</string>
+    <string name="fragment_graph">График выплат</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

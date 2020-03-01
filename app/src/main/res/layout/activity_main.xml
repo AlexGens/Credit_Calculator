@@ -44,35 +44,37 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/need_to_calculate"
+                android:textSize="14sp"
+                android:layout_marginStart="16dp"
                 android:id="@+id/want_to_calculateTxVw"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+
+                >
             </TextView>
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:entries="@array/spinner_strings"
                 android:id="@+id/spinner"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:layout_marginEnd="16dp">
 
             </Spinner>
 
         </LinearLayout>
-     <!--   <LinearLayout
+    <!--   <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@id/PaymentDataLayout_id">
+            android:id="@id/payout_duration_id">
         <LinearLayout
             style="@style/EditText_Layout">
             <ImageView
                 style="@style/ImageView.EnterCredSum"
-                android:id="@id/credit_Sum_image_id">
+                android:id="@id/credit_sum_image_id">
             </ImageView>
             <EditText
                 style="@style/EditText.EnterCreditSum"

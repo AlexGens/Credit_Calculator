@@ -1,13 +1,14 @@
-package com.example.credit_calculator;
+package com.example.calculation;
+
+import org.joda.time.LocalDate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
 
 public class CredSumAnnuit extends Calculation {
 
 
-    public CredSumAnnuit(int payoutDuration, double monthPay , double percent,  Calendar startDate) {
+    public CredSumAnnuit(int payoutDuration, double monthPay , double percent,  LocalDate startDate) {
         this.payoutDuration = payoutDuration;
         this.percent = percent;
         this.startDate = startDate;

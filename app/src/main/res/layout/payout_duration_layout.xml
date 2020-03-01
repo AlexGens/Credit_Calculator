@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@id/payout_dur_payment_data_layout_id"
+    >
+    <LinearLayout
+        style="@style/EditText_Layout">
+        <ImageView
+            style="@style/ImageView.EnterCredSum"
+            android:id="@id/credit_sum_image_id">
+        </ImageView>
+        <EditText
+            style="@style/EditText.EnterCreditSum"
+            android:id="@id/payout_lay_credit_sum_id">
+        </EditText>
+
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/EditText_Layout">
+        <ImageView
+            style="@style/ImageView.EnterPercent"
+            android:id="@id/percent_image_id">
+        </ImageView>
+        <EditText
+            style="@style/EditText.EnterPercent"
+            android:id="@id/payout_lay_percent_id">
+        </EditText>
+
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/EditText_Layout">
+        <ImageView
+            style="@style/ImageView.EnterMonthPay"
+            android:id="@id/month_pay_image_id">
+
+        </ImageView>
+        <EditText
+            style="@style/EditText.EnterMonthPay"
+            android:id="@id/payout_lay_month_pay_id">
+
+        </EditText>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/EditText_Layout">
+        <ImageView
+            style="@style/ImageView.EnterStartDate"
+            android:id="@id/date_of_start_image_id">
+        </ImageView>
+
+        <EditText
+            style="@style/EditText.EnterStartDate"
+            android:id="@id/payout_lay_date_of_start_id">
+        </EditText>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,8 +1,9 @@
-package com.example.credit_calculator;
+package com.example.extraPayments;
 
+
+import com.example.credit_calculator.AmountOrTerm;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -14,13 +15,8 @@ public class ExtraPaymentsMap  {
     public enum INTERVAL {NONE, ONE_MONTH, THREE_MONTH, SIX_MONTH, YEAR}
     private static ExtraPaymentsMap instance;
 
-    public static ExtraPaymentsMap getInstance(Calendar startDate, int payoutDuration) {
-        if (instance == null) {
-            instance = new ExtraPaymentsMap(startDate, payoutDuration);
-        }
-        return instance;
-    }
-    private ExtraPaymentsMap(Calendar startDate, int payoutDuration) {
+
+    public ExtraPaymentsMap(Calendar startDate, int payoutDuration) {
         this.startDate = startDate;
         this.lastPay.set(Calendar.YEAR, startDate.get(Calendar.YEAR));
         this.lastPay.set(Calendar.MONTH, startDate.get(Calendar.MONTH) + payoutDuration);
@@ -33,7 +29,7 @@ public class ExtraPaymentsMap  {
     В случае совпадения дат частичных погашений их суммы складываются, а стратегия дальнейшего расчёта кредита
     остаётся, которая была принята раньше.
          */
-    public boolean put(Integer key , Calendar date, Integer value, ExtraPaymentsMap.INTERVAL interval, AmountOrTerm aot) {
+    public boolean put(Calendar date, Integer value, ExtraPaymentsMap.INTERVAL interval, AmountOrTerm aot) {
         try {
             if (interval != INTERVAL.NONE) {
                 while (date.before(lastPay)) {
