@@ -22,6 +22,9 @@
         <item>месяцев</item>
         <item>лет</item>
     </string-array>
+    <string name="payout_duration_months_less_5">месяца</string>
+    <string name="payout_duration_years_1">год</string>
+    <string name="payout_duration_years_less_5">года</string>
     <string name="credit_sum_4_result">Сумма кредита</string>
     <string name="percent_4_result">Процентная ставка</string>
     <string name="payout_duration_4_result">Срок кредита</string>
@@ -32,8 +35,23 @@
     <string name="date_of_last_payment_4_result">Дата последней выплаты</string>
     <string name="fragment_show_results">Результат</string>
     <string name="fragment_graph">График выплат</string>
+    <string name="extra_payments_add_sum">Сумма</string>
+    <string name="extra_payments_add_date">Дата</string>
+    <string name="extra_payments_add_interval_text">Повторить платёж</string>
+    <string name="extra_payments_add_reduce_amount_rg">Уменьшить платёж</string>
+    <string name="extra_payments_add_short_term_rg">Уменьшить срок выплаты</string>
+    <string-array name="extra_payments_add_interval">
+        <item>Не повторять</item>
+        <item>Ежемесячно</item>
+        <item>Раз в 3 месяца</item>
+        <item>Раз в 6 месяцев</item>
+        <item>Раз в год</item>
+    </string-array>
+    <string name="result_graph_date">Дата</string>
+    <string name="result_graph_pure_payment">Основной долг</string>
+    <string name="result_graph_percents">Переплата</string>
+    <string name="result_graph_full_payment">Ежемесячный платёж</string>
+    <string name="result_graph_credit_sum">Остаток долга</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

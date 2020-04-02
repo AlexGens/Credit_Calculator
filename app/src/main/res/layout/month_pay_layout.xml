@@ -6,7 +6,8 @@
     android:id="@id/payment_data_layout_id"
     >
     <LinearLayout
-        style="@style/EditText_Layout">
+        style="@style/EditText_Layout"
+        android:paddingTop="8dp">
         <ImageView
             style="@style/ImageView.EnterCredSum"
             android:id="@id/credit_sum_image_id">

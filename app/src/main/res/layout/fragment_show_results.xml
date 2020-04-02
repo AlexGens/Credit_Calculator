@@ -3,171 +3,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.results.showResultsFrag">
+    tools:context="com.alexGens.results.ShowResultsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:background="@drawable/rectangle"
             style="@style/Basic"
-            >
+            android:background="@drawable/rectangle"
+            android:padding="8dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    style="@style/result_values"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:text="@string/credit_sum_4_result">
+                    android:gravity="start"
+                    android:text="@string/credit_sum_4_result"/>
 
-                </TextView>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:gravity="end"
-                    android:id="@id/result_credit_Sum_id">
+                    android:id="@id/result_credit_Sum_id"
+                    style="@style/result_values"/>
 
-                </TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    style="@style/result_values"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:text="@string/percent_4_result">
+                    android:gravity="start"
+                    android:text="@string/percent_4_result"/>
 
-                </TextView>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:gravity="end"
-                    android:id="@id/result_percent_id">
+                    android:id="@id/result_percent_id"
+                    style="@style/result_values"/>
 
-                </TextView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    style="@style/result_values"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:text="@string/payout_duration_4_result">
+                    android:gravity="start"
+                    android:text="@string/payout_duration_4_result" />
 
-                </TextView>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:gravity="end"
-                    android:id="@id/result_payout_duration_id">
-
-                </TextView>
+                    android:id="@id/result_payout_duration_id"
+                    style="@style/result_values" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    style="@style/result_values"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
+                    android:gravity="start"
                     android:text="@string/date_of_start_4_result">
 
                 </TextView>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="16sp"
-                    android:gravity="end"
-                    android:id="@id/result_date_of_start_id">
 
-                </TextView>
+                <TextView
+                    android:id="@id/result_date_of_start_id"
+                    style="@style/result_values" />
             </LinearLayout>
 
 
         </LinearLayout>
 
         <LinearLayout
+            style="@style/Basic"
             android:background="@drawable/rectangle"
-            style="@style/Basic">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/monthly_payment_4_result">
-            </TextView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:id="@+id/monthly_pay_field_4_id">
+            android:padding="8dp">
 
-            </TextView>
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/all_percents_4_result">
-            </TextView>
+                style="@style/result_values.black_text"
+                android:gravity="start"
+                android:text="@string/monthly_payment_4_result" />
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
+                android:id="@+id/monthly_pay_field_4_id"
+                style="@style/result_values"/>
+
+
+            <TextView
+                style="@style/result_values.black_text"
+                android:gravity="start"
+                android:text="@string/all_percents_4_result" />
+
+            <TextView
                 android:id="@+id/all_percents_field_id"
-                android:text="boom">
+                style="@style/result_values"
+                android:text="boom"/>
 
-            </TextView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/full_payment_4_result">
-            </TextView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:id="@+id/full_payment_id">
 
-            </TextView>
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/date_of_last_payment_4_result">
-            </TextView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:id="@+id/date_of_last_payment_id">
+                style="@style/result_values.black_text"
+                android:gravity="start"
+                android:text="@string/full_payment_4_result" />
 
-            </TextView>
+            <TextView
+                android:id="@+id/full_payment_id"
+                style="@style/result_values"/>
+
+
+            <TextView
+                style="@style/result_values.black_text"
+                android:gravity="start"
+                android:text="@string/date_of_last_payment_4_result" />
+
+            <TextView
+                android:id="@+id/date_of_last_payment_id"
+                style="@style/result_values"/>
+
         </LinearLayout>
     </LinearLayout>
 

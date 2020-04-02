@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.results.graphFrag">
+    android:orientation="vertical">
+        <TableLayout
+            android:id="@+id/result_graph_table"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:columnCount="5"
+            android:layout_gravity="center_horizontal"
+            android:shrinkColumns="1,3,4"
+            android:orientation="vertical">
+            <TableRow android:id="@+id/result_graph_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/graph_text"
+                    android:id="@+id/result_graph_textview"
+                    android:text="@string/result_graph_date"/>
+                <TextView
+                    style="@style/graph_text"
+                    android:text="@string/result_graph_pure_payment"/>
+                <TextView
+                    style="@style/graph_text"
+                    android:text="@string/result_graph_percents"/>
+                <TextView
+                    style="@style/graph_text"
+                    android:text="@string/result_graph_full_payment"/>
+                <TextView
+                    style="@style/graph_text"
+                    android:text="@string/result_graph_credit_sum"/>
+            </TableRow>
+        </TableLayout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="График" />
 
-</FrameLayout>
+    </ScrollView>
+
