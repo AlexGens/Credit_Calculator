@@ -43,7 +43,7 @@ public class GraphFragment extends Fragment {
     private Context context;
     private TableLayout resultGraph;
     private View v;
-    private TreeMap<LocalDate, HashMap<GraphColumn, ArrayList<Double>>> resultMap;
+    private TreeMap<Integer, HashMap<GraphColumn, String>> resultMap;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -84,40 +84,32 @@ public class GraphFragment extends Fragment {
     }
 
     @SuppressLint({"Упало на addTabRow", "DefaultLocale"})
-    private void addTableRow(Map.Entry<LocalDate, HashMap<GraphColumn, ArrayList<Double>>> entry) {
+    private void addTableRow(Map.Entry<Integer, HashMap<GraphColumn, String>> entry) {
         Context themedContext = new ContextThemeWrapper(context, R.style.graph_text);
 
-        do {
             TextView date = new TextView(themedContext);
-            date.setText(entry.getKey().toString("dd.MM.yyyy"));
+            date.setText(entry.getValue().get(GraphColumn.DATE));
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            TextView purePay =  new TextView(themedContext);
-
-            String format = "%.2f";     // Формат вывода расчётов в таблицу
-            purePay.setText(String.format(format, entry.getValue().get(GraphColumn.PURE_PAYMENT).get(0)));
-            entry.getValue().get(GraphColumn.PURE_PAYMENT).remove(0);
+            TextView basicPay =  new TextView(themedContext);
+            basicPay.setText(entry.getValue().get(GraphColumn.BASIC_PAYMENT));
 
             TextView percents = new TextView(themedContext);
-            percents.setText(String.format(format, entry.getValue().get(GraphColumn.PERCENTS).get(0)));
-            entry.getValue().get(GraphColumn.PERCENTS).remove(0);
+            percents.setText(entry.getValue().get(GraphColumn.PERCENTS));
 
             TextView fullPay = new TextView(themedContext);
-            fullPay.setText(String.format(format, entry.getValue().get(GraphColumn.FULL_PAYMENT).get(0)));
-            entry.getValue().get(GraphColumn.FULL_PAYMENT).remove(0);
+            fullPay.setText(entry.getValue().get(GraphColumn.FULL_PAYMENT));
 
             TextView credSum = new TextView(themedContext);
-            credSum.setText(String.format(format, entry.getValue().get(GraphColumn.FULL_CRED_SUM).get(0)));
-            entry.getValue().get(GraphColumn.FULL_CRED_SUM).remove(0);
+            credSum.setText(entry.getValue().get(GraphColumn.FULL_CRED_SUM));
 
             tableRow.addView(date, 0);
-            tableRow.addView(purePay, 1);
+            tableRow.addView(basicPay, 1);
             tableRow.addView(percents,2 );
             tableRow.addView(fullPay, 3);
             tableRow.addView(credSum, 4);
             resultGraph.addView(tableRow);
-        } while (entry.getValue().get(GraphColumn.FULL_PAYMENT).size() > 0);
     }
 
     @Override
@@ -127,7 +119,7 @@ public class GraphFragment extends Fragment {
         resultGraph =(TableLayout) v.findViewById(R.id.result_graph_table);
         resultMap = MainActivity.resultGraph;
         context = v.getContext();
-        for (Map.Entry<LocalDate, HashMap<GraphColumn, ArrayList<Double>>> entry : resultMap.entrySet()
+        for (Map.Entry<Integer, HashMap<GraphColumn, String>> entry : resultMap.entrySet()
         ) {
             addTableRow(entry);
         }

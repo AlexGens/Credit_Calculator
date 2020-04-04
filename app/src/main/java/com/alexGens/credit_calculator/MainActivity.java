@@ -18,14 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.alexGens.calculation.Calculation;
-import com.alexGens.calculation.CredSumAnnuity;
+import com.alexGens.NewCalculation.NewCalculation;
 import com.alexGens.calculation.GraphColumn;
-import com.alexGens.calculation.MonthPayAnnuity;
-import com.alexGens.calculation.MonthPayDifferentiated;
-import com.alexGens.calculation.PayoutDurAnnuity;
 import com.alexGens.extraPayments.ExtraPaymentsMap;
-import com.alexGens.extraPayments.ResultMap;
 import com.alexGens.results.ResultsActivity;
 
 import org.joda.time.LocalDate;
@@ -84,7 +79,7 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     };
 
     // Остальные поля класса
-    private int creditSum = 0;
+    private double creditSum = 0;
     private double monthPay = 0;
     private double percent;
     private int payoutDuration = 0;
@@ -93,12 +88,12 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     private int days;
     private Context context;
     private CreditType creditType;
-    private ExtraPaymentsMap extraPaymentsMap;
+    private ExtraPaymentsMap extraPaymentsMap = new ExtraPaymentsMap();
     private HashMap<Calendar, Integer> extraPayments;
     private LocalDate startDate;
     private NeedToFind needToFind;
     private ArrayList<ArrayList<View> > extraPaymentsViews = new ArrayList<>();
-    public static TreeMap<LocalDate, HashMap<GraphColumn, ArrayList<Double>>> resultGraph;
+    public static TreeMap<Integer, HashMap<GraphColumn, String>> resultGraph;
 
     public interface StartDataListener {
         void startDataListener(ArrayList<String> data);
@@ -224,42 +219,73 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         calculation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NewCalculation pureGraph;
+                boolean isTest = false;
+                if (test(isTest)) {
+                    DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+                    // Входные данные
+                    needToFind = MONTH_PAY;
+                    creditType = ANNUITY;
+                    creditSum = 250000;
+                    payoutDuration = 36;
+                    percent = 0.18;
+                    startDate = LocalDate.parse("03.07.2020", formatter);
+                    monthPay = 3000;
+                    //
 
-                if (hasAllDataToCalc()){}
-                else {return;}
+                } else if (hasAllDataToCalc()) {
                 updateDisplay();
-                Calculation pureGraph;
+                }
+                else {return;}
+                if (extraPaymentsViews.size() == 0) {
+                    if (test(isTest)) {
+                        extraPaymentsMap = new ExtraPaymentsMap();
+//                        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+//
+//                            LocalDate localDate = LocalDate.parse("04.07.2020", formatter);
+//                            double value = 17000;
+//                            AmountOrTerm aot = AmountOrTerm.AMOUNT_REDUCE;
+//                            ExtraPaymentsMap.INTERVAL interval = ExtraPaymentsMap.INTERVAL.NONE;
+//                            extraPaymentsMap.put(localDate, value, interval, aot);
+                    }
+                } else if (putDataToExtraPaymentMap()) {
+                } else {
+                    return;
+                }
                 switch (needToFind) {
                     case MONTH_PAY:
                         if (creditType == ANNUITY) {
-                            pureGraph = new MonthPayAnnuity(payoutDuration, creditSum, percent, startDate);
+                            pureGraph = new NewCalculation(creditSum, payoutDuration,  percent, startDate, extraPaymentsMap);
                             break;
-                        }
-                        else if (creditType == DIFFERENTIETED) {
-                            pureGraph = new MonthPayDifferentiated(payoutDuration, creditSum, percent, startDate);
+                        } else if (creditType == DIFFERENTIETED) {
+                            pureGraph = new NewCalculation(payoutDuration, creditSum, percent, startDate, creditType, extraPaymentsMap);
                             break;
                         }
                     case PAYOUT_DURATION:
-                        pureGraph = new PayoutDurAnnuity(monthPay, creditSum, percent, startDate);
+                        pureGraph = new NewCalculation(monthPay, creditSum, percent, startDate, extraPaymentsMap);
                         break;
                     case CREDIT_SUM:
-                        pureGraph = new CredSumAnnuity(payoutDuration, monthPay, percent, startDate);
+                        pureGraph = new NewCalculation(payoutDuration, monthPay, percent, startDate, extraPaymentsMap);
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + needToFind);
                 }
 
-                if (extraPaymentsViews.size() == 0) {}
-                else if (putDataToExtraPaymentMap(pureGraph)){}
-                else {return;}
-                resultGraph = new ResultMap(pureGraph, extraPaymentsMap,  startDate, creditSum, monthPay, percent, payoutDuration).getResultGraph();
-           //     dataListener.startDataListener(startData());
+
+                resultGraph = pureGraph.getPureGraph();
+                //     dataListener.startDataListener(startData());
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ResultsActivity.class);
                 startActivity(intent);
+
+
             }
 
         });
+    }
+
+    private boolean test(boolean b) {
+        return b;
     }
 
     private ArrayList<String> startData() {
@@ -279,13 +305,13 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         return startData;
     }
 
-    private boolean putDataToExtraPaymentMap(Calculation pureGraph) {
-        /**
-         * Метод работает с данными, введёнными в views для частичных погашений.
-         * Если в каком-то из созданных view есть пустые строки,
-         * то метод выводит на экран соответствующее сообщение и возвращает false.
-         * Если все строки заполнены, то метод проверяет значения и добавляет их в extraPaymentMap.
-         */
+    /**
+     * Метод работает с данными, введёнными в views для частичных погашений.
+     * Если в каком-то из созданных view есть пустые строки,
+     * то метод выводит на экран соответствующее сообщение и возвращает false.
+     * Если все строки заполнены, то метод проверяет значения и добавляет их в extraPaymentMap.
+     */
+    private boolean putDataToExtraPaymentMap() {
         for (ArrayList<View> list  : extraPaymentsViews
              ) {
             if (list.get(6) == null) {
@@ -298,7 +324,7 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
                 return false;
             }
         }
-        extraPaymentsMap = new ExtraPaymentsMap(pureGraph);
+        extraPaymentsMap = new ExtraPaymentsMap();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
         for ( ArrayList<View> list  : extraPaymentsViews
              ) {
