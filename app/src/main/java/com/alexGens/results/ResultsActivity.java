@@ -8,7 +8,6 @@ import android.widget.GridLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -37,6 +36,8 @@ private GridLayout gridLayout;
         viewPager=(ViewPager) findViewById(R.id.result_viewpager);
         tabLayout=(TabLayout) findViewById(R.id.result_tablayout);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
        // Fragment fr = getSupportFragmentManager().findFragmentById(R.layout.fragment_show_results);
         Resources resources = getResources();

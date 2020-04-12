@@ -49,6 +49,7 @@
     <style name="EditText.EnterCreditSum">
         <item name="android:hint">@string/CredSum</item>
         <item name="android:inputType">number</item>
+        <item name="android:maxLength">10</item>
 
     </style>
     <style name="ImageView.EnterPercent">
@@ -57,6 +58,7 @@
     <style name="EditText.EnterPercent">
         <item name="android:hint">@string/percent</item>
         <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">5</item>
     </style>
     <style name="ImageView.EnterPayoutDur">
         <item name="android:background">@drawable/duration</item>

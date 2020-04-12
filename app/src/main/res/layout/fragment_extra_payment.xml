@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alexGens.credit_calculator.AddExtraPaymentsFragment">
+
+    <LinearLayout
+        android:id="@+id/extra_pay_add_all_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:background="@drawable/rectangle"
+            style="@style/Basic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            >
+            <ImageView
+                android:id="@+id/fragment_destroy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/close"
+                android:layout_gravity="end">
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/EditText_Layout">
+                <EditText
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/extra_payments_add_sum"
+                    android:id="@+id/extra_pay_add_sum_id"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    >
+                </EditText>
+                <EditText
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/extra_payments_add_date"
+                    android:id="@+id/extra_pay_add_date_id"
+                    android:onClick="extraPaymentDateClick"
+                    android:clickable="false"
+                    android:focusable="false">
+                </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/EditText_Layout">
+                <TextView
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/extra_payments_add_interval_text"
+                    android:id="@+id/want_to_calculateTxVw"
+
+                    >
+                </TextView>
+                <Spinner
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/extra_payments_add_date"
+                    android:id="@id/payout_lay_date_of_start_id"
+                    android:entries="@array/extra_payments_add_interval">
+                </Spinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/EditText_Layout"
+                android:paddingBottom="0dp">
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/extra_pay_add_rb_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extra_payments_add_reduce_amount_rg"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:id="@+id/extra_pay_add_rb_term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extra_payments_add_short_term_rg"/>
+
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

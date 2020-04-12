@@ -7,40 +7,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        >
-
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/result_toolbar"
-            app:layout_collapseMode="pin"
-            app:title="Результат расчёта"
-
-            />
+            android:background="@color/colorPrimary">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/result_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
+                app:title="Результат расчёта"/>
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/result_tablayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabTextColor="#fff"
+                android:background="@color/colorPrimary"
                 app:tabSelectedTextColor="@color/colorAccent"
-                android:background="@color/colorPrimary">
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_show_results"/>
+                app:tabTextColor="#fff">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_graph"/>
+                    android:text="@string/fragment_show_results" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_graph" />
 
 
             </com.google.android.material.tabs.TabLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/result_viewpager"

@@ -53,5 +53,8 @@
     <string name="result_graph_full_payment">Ежемесячный платёж</string>
     <string name="result_graph_credit_sum">Остаток долга</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

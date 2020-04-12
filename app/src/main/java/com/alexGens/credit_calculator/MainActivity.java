@@ -1,12 +1,16 @@
 package com.alexGens.credit_calculator;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.BaseInputConnection;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -18,7 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.alexGens.NewCalculation.NewCalculation;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.alexGens.calculation.Calculation;
 import com.alexGens.calculation.GraphColumn;
 import com.alexGens.extraPayments.ExtraPaymentsMap;
 import com.alexGens.results.ResultsActivity;
@@ -27,10 +34,14 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.alexGens.credit_calculator.CreditType.ANNUITY;
 import static com.alexGens.credit_calculator.CreditType.DIFFERENTIETED;
@@ -39,8 +50,7 @@ import static com.alexGens.credit_calculator.NeedToFind.MONTH_PAY;
 import static com.alexGens.credit_calculator.NeedToFind.PAYOUT_DURATION;
 
 
-public class MainActivity extends Activity   implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
+public class MainActivity extends FragmentActivity   implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     // Views
     private EditText payoutDurationEdTx;
     private Spinner payoutDurationSpinner;
@@ -59,7 +69,7 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     private TextView addExtraPayTxvw;
     private LinearLayout forExtraPaymentsLnLo;
     private EditText extraPaymentDateEdTx;
-    private LinearLayout paymentDataLnLo;
+    private LinearLayout fragmentContainerView;
     private DatePickerDialog.OnDateSetListener listener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year,
@@ -92,13 +102,8 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     private HashMap<Calendar, Integer> extraPayments;
     private LocalDate startDate;
     private NeedToFind needToFind;
-    private ArrayList<ArrayList<View> > extraPaymentsViews = new ArrayList<>();
     public static TreeMap<Integer, HashMap<GraphColumn, String>> resultGraph;
 
-    public interface StartDataListener {
-        void startDataListener(ArrayList<String> data);
-    }
-    private StartDataListener dataListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +118,6 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     private void setVariables() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
-     //   creditSumEdTx = (EditText) findViewById(R.id.credit_Sum_id);
         creditType = ANNUITY;
         calculation = (TextView) findViewById(R.id.calculation_id);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -125,13 +129,14 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         allLayoutLnLo = (LinearLayout) findViewById(R.id.all_layout_id);
+        fragmentContainerView = (LinearLayout) findViewById(R.id.fragment_container_view);
         needToFind = MONTH_PAY;
        // <-- TODO Убрать tex -->
         LayoutInflater inflater = getLayoutInflater();
         monthPaylayout = (LinearLayout)inflater.inflate(R.layout.month_pay_layout, (ViewGroup) findViewById(R.id.payment_data_layout_id), false);
         payoutDurLayout = (LinearLayout)inflater.inflate(R.layout.payout_duration_layout, (ViewGroup) findViewById(R.id.payout_dur_payment_data_layout_id), false);
         credSumLayout = (LinearLayout)inflater.inflate(R.layout.credit_sum_layout, (ViewGroup) findViewById(R.id.cred_sum_payment_data_layout_id), false);
-        forExtraPaymentsLnLo = (LinearLayout) findViewById(R.id.main_for_extra_payments_layout);
+      //  forExtraPaymentsLnLo = (LinearLayout) findViewById(R.id.con);
         startDate = LocalDate.now();
         years = startDate.getYear();
         months = startDate.getMonthOfYear();
@@ -155,11 +160,14 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
                 creditSumEdTx = (EditText) findViewById(R.id.month_pay_lay_credit_sum_id);
                 if (temp == null) {} else {
                     creditSumEdTx.setText(temp);
+
+                    creditSumEdTxFormat();
                 }
                 temp = percentEdTx == null ? null : percentEdTx.getText().toString();
                 percentEdTx = (EditText) findViewById(R.id.month_pay_lay_percent_id);
                 if (temp == null) {} else {
                     percentEdTx.setText(temp);
+                    percentEdTxFormat();
                 }
                 temp = dateOfStartEdtx == null ? null : dateOfStartEdtx.getText().toString();
                 dateOfStartEdtx = (EditText) findViewById(R.id.month_pay_lay_date_of_start_id);
@@ -172,6 +180,7 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
                 creditSumEdTx = (EditText) findViewById(R.id.payout_lay_credit_sum_id);
                 if (temp == null) {} else {
                     creditSumEdTx.setText(temp);
+                    creditSumEdTxFormat();
                 }
                 temp = percentEdTx == null ? null : percentEdTx.getText().toString();
                 percentEdTx = (EditText) findViewById(R.id.payout_lay_percent_id);
@@ -215,11 +224,73 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         }
     }
 
+    private void percentEdTxFormat() {
+        percentEdTx.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+//            if (percentEdTx.getText().length() != 0) {
+//                if ()
+//            }
+            }
+        });
+    }
+
+    private void creditSumEdTxFormat() {
+        final String[] credSum = {""};
+        final int[] selector = {0};
+        creditSumEdTx.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (creditSumEdTx.getText().toString().length() != 0) {
+                    if (creditSumEdTx.getText().toString().replaceAll("[\\s,]", "").equals(credSum[0].replaceAll("[\\s,]", "")) && !creditSumEdTx.getText().toString().equals(credSum[0]) && creditSumEdTx.getText().toString().length() <= 10) {
+                        BaseInputConnection textFieldInputConnection = new BaseInputConnection(creditSumEdTx, true);
+                        textFieldInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    }else if (!creditSumEdTx.getText().toString().equals(credSum[0]) && creditSumEdTx.getText().toString().length() <= 10) {
+                        selector[0] = creditSumEdTx.getSelectionEnd();
+                        credSum[0] = setThousandsSeparator(creditSumEdTx.getText().toString());
+                        int separators = credSum[0].replaceAll(".*^,", "").length() - creditSumEdTx.getText().toString().replaceAll(".*^,", "").length();
+                        selector[0] = credSum[0].equals("0") ? 1 : selector[0] + separators;
+                        creditSumEdTx.setText(credSum[0]);
+                    } else creditSumEdTx.setSelection(selector[0]);
+                } else {
+                    selector[0] = 0;
+                    credSum[0] = "";
+                }
+            }
+        });
+    }
+
+    private String setThousandsSeparator(String value) {
+        String temp = value.replaceAll("[\\s,]", "");
+        StringBuilder builder = new StringBuilder().append(temp).reverse();
+        byte separators = 0;
+        for (int i = 1; i <= temp.length() ; i++) {
+            if ((i - 1) % 3 == 0 && i - 1 != 0) {
+                builder.insert(i - 1 + separators, ",");
+                separators++;
+            }
+        }
+        return builder.reverse().toString();
+    }
+
     private void calculate() {
         calculation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NewCalculation pureGraph;
+                Calculation pureGraph;
                 boolean isTest = false;
                 if (test(isTest)) {
                     DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
@@ -229,25 +300,30 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
                     creditSum = 250000;
                     payoutDuration = 36;
                     percent = 0.18;
-                    startDate = LocalDate.parse("03.07.2020", formatter);
-                    monthPay = 3000;
+                    startDate = LocalDate.parse("05.04.2020", formatter);
+                    monthPay = 0;
                     //
 
                 } else if (hasAllDataToCalc()) {
                 updateDisplay();
                 }
                 else {return;}
-                if (extraPaymentsViews.size() == 0) {
-                    if (test(isTest)) {
+                if (test(isTest)) {
                         extraPaymentsMap = new ExtraPaymentsMap();
-//                        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
-//
-//                            LocalDate localDate = LocalDate.parse("04.07.2020", formatter);
-//                            double value = 17000;
-//                            AmountOrTerm aot = AmountOrTerm.AMOUNT_REDUCE;
-//                            ExtraPaymentsMap.INTERVAL interval = ExtraPaymentsMap.INTERVAL.NONE;
-//                            extraPaymentsMap.put(localDate, value, interval, aot);
-                    }
+                        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+
+                            LocalDate localDate = LocalDate.parse("06.08.2020", formatter);
+                            double value = 17000;
+                            AmountOrTerm aot = AmountOrTerm.AMOUNT_REDUCE;
+                            ExtraPaymentsMap.INTERVAL interval = ExtraPaymentsMap.INTERVAL.ONE_MONTH;
+                            extraPaymentsMap.put(localDate, value, interval, aot);
+
+                            localDate = LocalDate.parse("06.08.2020", formatter);
+                            value = 8000;
+                            aot = AmountOrTerm.TERM_REDUCE;
+                            interval = ExtraPaymentsMap.INTERVAL.ONE_MONTH;
+                            extraPaymentsMap.put(localDate, value, interval, aot);
+
                 } else if (putDataToExtraPaymentMap()) {
                 } else {
                     return;
@@ -255,17 +331,17 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
                 switch (needToFind) {
                     case MONTH_PAY:
                         if (creditType == ANNUITY) {
-                            pureGraph = new NewCalculation(creditSum, payoutDuration,  percent, startDate, extraPaymentsMap);
+                            pureGraph = new Calculation(creditSum, payoutDuration,  percent, startDate, extraPaymentsMap);
                             break;
                         } else if (creditType == DIFFERENTIETED) {
-                            pureGraph = new NewCalculation(payoutDuration, creditSum, percent, startDate, creditType, extraPaymentsMap);
+                            pureGraph = new Calculation(creditSum ,payoutDuration ,  percent, startDate, creditType, extraPaymentsMap);
                             break;
                         }
                     case PAYOUT_DURATION:
-                        pureGraph = new NewCalculation(monthPay, creditSum, percent, startDate, extraPaymentsMap);
+                        pureGraph = new Calculation(creditSum, monthPay, percent, startDate, extraPaymentsMap);
                         break;
                     case CREDIT_SUM:
-                        pureGraph = new NewCalculation(payoutDuration, monthPay, percent, startDate, extraPaymentsMap);
+                        pureGraph = new Calculation(payoutDuration, monthPay, percent, startDate, extraPaymentsMap);
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + needToFind);
@@ -312,33 +388,30 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
      * Если все строки заполнены, то метод проверяет значения и добавляет их в extraPaymentMap.
      */
     private boolean putDataToExtraPaymentMap() {
-        for (ArrayList<View> list  : extraPaymentsViews
-             ) {
-            if (list.get(6) == null) {
-                toast = Toast.makeText(context, "Введите сумму частичного погашения",Toast.LENGTH_LONG );
-                toast.show();
-                return false;
-            } else if (list.get(5) == null) {
-                toast = Toast.makeText(context, "Введите дату частичного погашения",Toast.LENGTH_LONG );
-                toast.show();
-                return false;
-            }
+       ArrayList<ArrayList<View> > extraPaymentsViews = new ArrayList<>();
+        for (int i = 0; i < fragmentContainerView.getChildCount() ; i++) {
+            ArrayList<View> list = new ArrayList<>();
+            fragmentContainerView.getChildAt(i).addChildrenForAccessibility(list);
+            extraPaymentsViews.add(list);
         }
+        if (!checkExtraPaymentValues(extraPaymentsViews)){return false;}
+
+
         extraPaymentsMap = new ExtraPaymentsMap();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
         for ( ArrayList<View> list  : extraPaymentsViews
              ) {
             EditText temp;
-            temp = (EditText) list.get(5);
+            temp = (EditText) list.get(2);
             LocalDate localDate = LocalDate.parse(temp.getText().toString(), formatter);
 
-            temp = (EditText) list.get(6);
+            temp = (EditText) list.get(1);
             double value = Double.parseDouble(temp.getText().toString());
 
-            RadioButton rb = (RadioButton) list.get(2);
+            RadioButton rb = (RadioButton) list.get(5);
             AmountOrTerm aot = rb.isChecked() ? AmountOrTerm.AMOUNT_REDUCE : AmountOrTerm.TERM_REDUCE;
 
-            Spinner sp = (Spinner) list.get(3);
+            Spinner sp = (Spinner) list.get(4);
             ExtraPaymentsMap.INTERVAL interval;
             switch (sp.getSelectedItemPosition()) {
                 case 1 : interval = ExtraPaymentsMap.INTERVAL.ONE_MONTH; break;
@@ -352,11 +425,36 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         return true;
     }
 
+    private boolean checkExtraPaymentValues(ArrayList<ArrayList<View>> extraPaymentsViews) {
+        for (ArrayList<View> list : extraPaymentsViews
+        ) {
+            EditText sum = (EditText) list.get(1);
+            EditText date = (EditText) list.get(2);
+            if (sum.getText().toString().trim().length() == 0) {
+                toast = Toast.makeText(context, "Введите сумму частичного погашения", Toast.LENGTH_LONG);
+                toast.show();
+                return false;
+            } else if (date.getText().toString().trim().length() == 0) {
+                toast = Toast.makeText(context, "Введите дату частичного погашения", Toast.LENGTH_LONG);
+                toast.show();
+                return false;
+            } else if (LocalDate.parse(date.getText().toString(), DateTimeFormat.forPattern("dd.MM.yyyy")).isBefore(startDate)) {
+                toast = Toast.makeText(context, "Дата частичного погашения, раньше даты получения кредита", Toast.LENGTH_LONG);
+                toast.show();
+                return false;
+
+            }
+        }
+        return true;
+    }
+
+    /**
+     Метод выполняется перед началом расчёта и проверяет все ли строки заполнены.
+     Если какая-то строка оказывается не заполнена,
+     на экран выводится сообщение о пустой строке и метод возвращает false.
+     */
     private boolean hasAllDataToCalc() {
-         /**
-         Метод выполняется перед началом расчёта и проверяет все ли строки заполнены.
-          Если какая-то строка оказывается не заполнена, метод возвращает false.
-          */
+
         try {
             if (needToFind != CREDIT_SUM) {
                 creditSum = Integer.parseInt(creditSumEdTx.getText().toString());
@@ -400,21 +498,12 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
             addExtraPayTxvw.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LayoutInflater inflater = getLayoutInflater();
-                    View view = (LinearLayout) inflater.inflate(R.layout.extra_payments_add, (ViewGroup) findViewById(R.id.extra_pay_add_all_id), false);
-
-                    forExtraPaymentsLnLo.addView(view);
-                    ArrayList<View> temp = new ArrayList<>();
-                    temp.add(view);
-                    view.addChildrenForAccessibility(temp);
-                    extraPaymentsViews.add(temp);
-                    int x = 5;
-
-
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    AddExtraPaymentsFragment fragment = new AddExtraPaymentsFragment();
+                    transaction.add(R.id.fragment_container_view, fragment);
+                    transaction.commit();
                 }
-            }); {
-
-            };
+            });
         }
 
     @Override
@@ -441,9 +530,9 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
         startDate = LocalDate.parse(years + "-" + months + "-" + days);;
         dateOfStartEdtx.setText(
                 new StringBuilder()
-                        .append(months).append("-")
-                        .append(days).append("-")
-                        .append(years).append(" "));
+                        .append(days).append(".")
+                        .append(months).append(".")
+                        .append(years));
     }
     public void credTypeClick(View view) {
         RadioButton rb = (RadioButton) view;
@@ -477,7 +566,7 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    private void updateViews(LinearLayout forUpdate) {
+    private void updateViews (LinearLayout forUpdate) {
         if (forUpdate.equals(thisLayout)) {}
         else {
             allLayoutLnLo.removeView(thisLayout);
@@ -485,13 +574,6 @@ public class MainActivity extends Activity   implements View.OnClickListener, Ad
             thisLayout = forUpdate;
         }
     }
-    public void closeClick (View view) {
-        //  TODO Сделать закрывашку
-        LinearLayout ln = (LinearLayout) extraPaymentsViews.get(0).get(0);
-        ln.removeAllViewsInLayout();
-
-    }
-
 
 
 }
